@@ -5,7 +5,27 @@ $dbUser = "root";
 $dbPass = "";
 $dbName = "people";
 $status = "";
+$query= "CREATE TABLE `people`.`names` ( `Name` VARCHAR(40) NOT NULL , `Id_name` INT NOT NULL AUTO_INCREMENT , PRIMARY KEY (`Id_name`)) ENGINE = MyISAM; ";
 
+$mysql = mysqli_connect($dbHost, $dbUser, $dbPass);
+
+//create the data base if not exist
+if (mysqli_select_db($mysql, $dbName)) {
+    echo "Database exists";
+} else {
+    echo "Database does not exist";
+    $db = new PDO($scr, $dbUser, $dbPass);
+    $query = file_get_contents("shop.sql");
+
+    $stmt = $db->prepare($query);
+
+    if ($stmt->execute()){
+        echo "Success creation";
+    }else{ 
+        echo "Fail creation";
+    }
+}
+//connection to database
 try {
     $scr = "mysql:host=" . $dbHost . ";dbname=" . $dbName;
     $pdo = new PDO($scr, $dbUser, $dbPass);
@@ -13,6 +33,8 @@ try {
     echo "DB conextion failed" . $e->getMessage();
 }
 
+
+//save name into the database
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $name = $_POST['name'];
@@ -28,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 ?>
-
+<!-- This is a simple example in php to save names into a data base , using a form in html and styles in css -->
+<!--Alejandro Fernandez Restrepo - Topicos en ingenieria de software - 07/2021 -->
 
 <!DOCTYPE html>
 <html lang="en">
