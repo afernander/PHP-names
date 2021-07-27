@@ -5,6 +5,7 @@ $dbUser = "root";
 $dbPass = "";
 $dbName = "people";
 $status = "";
+$dbquery = "CREATE DATABASE IF NOT EXISTS people CHARACTER SET utf8 COLLATE utf8_general_ci;";
 $query= "CREATE TABLE `people`.`names` ( `Name` VARCHAR(40) NOT NULL , `Id_name` INT NOT NULL AUTO_INCREMENT , PRIMARY KEY (`Id_name`)) ENGINE = MyISAM; ";
 
 $mysql = mysqli_connect($dbHost, $dbUser, $dbPass);
@@ -14,8 +15,8 @@ if (mysqli_select_db($mysql, $dbName)) {
     echo "Database exists";
 } else {
     echo "Database does not exist";
-    $db = new PDO($scr, $dbUser, $dbPass);
-    $query = file_get_contents("shop.sql");
+    $db = new PDO($query, $dbUser, $dbPass);
+    
 
     $stmt = $db->prepare($query);
 
@@ -24,6 +25,18 @@ if (mysqli_select_db($mysql, $dbName)) {
     }else{ 
         echo "Fail creation";
     }
+
+    $db1 = new PDO($dbquery, $dbUser, $dbPass);
+    
+
+    $stmt1 = $db1->prepare($dbquery);
+
+    if ($stmt1->execute()){
+        echo "Success creation";
+    }else{ 
+        echo "Fail creation";
+    }
+
 }
 //connection to database
 try {
