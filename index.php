@@ -14,7 +14,7 @@ $mysql = mysqli_connect($dbHost, $dbUser, $dbPass);
 if (mysqli_select_db($mysql, $dbName)) {
     echo "Database exists";
 } else {
-    echo "Database does not exist";
+    echo "Database created";
 
 	$msql__ = mysqli_query($mysql, $dbquery);
 
